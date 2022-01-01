@@ -5,7 +5,6 @@ import useScrollTop from '../../../hooks/useDocumentTitle';
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword } from '../../../redux/actions/authActions';
 
 const ForgotPassword = () => {
   const { authStatus, isAuthenticating } = useSelector((state) => ({
@@ -33,7 +32,7 @@ const ForgotPassword = () => {
 
   const onSubmitEmail = () => {
     if (!!field.email && !field.error) {
-      dispatch(resetPassword(field.email));
+      // dispatch(resetPassword(field.email));
     }
   };
 

@@ -4,9 +4,7 @@ import ImageLoader from '../../../components/common/ImageLoader';
 import { Form, Formik } from 'formik';
 
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../../../redux/actions/miscActions';
-import { updateProfile } from '../../../redux/actions/profileActions';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import ConfirmModal from './ConfirmModal';
 import EditForm from './EditForm';
@@ -18,7 +16,7 @@ import useScrollTop from '../../../hooks/useScrollTop';
 import useAuth from '../../../hooks/useAuth';
 import defaultAvatar from '../../../images/defaultAvatar.jpg';
 import defaultBanner from '../../../images/defaultBanner.jpg';
-import axios from 'axios';
+import { loading } from '../../../redux/slices/appSlice';
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -39,7 +37,7 @@ const FormSchema = Yup.object().shape({
 });
 
 const EditProfile = () => {
-  const { createAccount, user, success, loading, error, authProvider, updateUser } = useAuth()
+  const { user, authProvider, updateUser } = useAuth()
   useDocumentTitle('Edit Account | Salinaka');
   useScrollTop();
 
@@ -47,14 +45,8 @@ const EditProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => () => {
-    dispatch(setLoading(false));
-  }, []);
-
-  const { profile, auth, isLoading } = useSelector((state) => ({
-    profile: state.profile,
-    auth: state.auth,
-    isLoading: state.app.loading
-  }));
+    dispatch(loading(false));
+  }, [dispatch]);
 
   const initFormikValues = {
     fullname: user.fullname || '',

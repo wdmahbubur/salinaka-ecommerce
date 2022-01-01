@@ -2,6 +2,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import PropType from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { addQtyItem, minusQtyItem } from '../../redux/slices/basketSlice';
 // import { addQtyItem, minusQtyItem } from '../../redux/actions/basketActions';
 
 const BasketItemControl = ({ product }) => {
@@ -9,13 +10,13 @@ const BasketItemControl = ({ product }) => {
 
   const onAddQty = () => {
     if (product.quantity < product.maxQuantity) {
-      // dispatch(addQtyItem(product.id));
+      dispatch(addQtyItem(product._id));
     }
   };
 
   const onMinusQty = () => {
     if ((product.maxQuantity >= product.quantity) && product.quantity !== 0) {
-      // dispatch(minusQtyItem(product.id));
+      dispatch(minusQtyItem(product._id));
     }
   };
 

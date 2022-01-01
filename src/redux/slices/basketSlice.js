@@ -5,20 +5,20 @@ export const basketSlice = createSlice({
     initialState: [],
     reducers: {
         setBasketItems: (state, action) => {
-            state = action.payload
+            return action.payload
         },
         dispatchAddToBasket: (state, action) => {
-            state = state.some((product) => product._id === action.payload.id) ? state : [action.payload, ...state];
+            return state.some((product) => product._id === action.payload._id) ? state : [action.payload, ...state];
         },
         removeFromBasket: (state, action) => {
-            state = state.filter((product) => product._id !== action.payload);
+            return state.filter((product) => product._id !== action.payload);
         },
         clearBasket: (state, action) => {
-            state = [];
+            return state = [];
         },
         addQtyItem: (state, action) => {
-            state = state.map((product) => {
-                if (product.id === action.payload) {
+            return state.map((product) => {
+                if (product._id === action.payload) {
                     return {
                         ...product,
                         quantity: product.quantity + 1
@@ -28,8 +28,8 @@ export const basketSlice = createSlice({
             });
         },
         minusQtyItem: (state, action) => {
-            state = state.map((product) => {
-                if (product.id === action.payload) {
+            return state.map((product) => {
+                if (product._id === action.payload) {
                     return {
                         ...product,
                         quantity: product.quantity - 1

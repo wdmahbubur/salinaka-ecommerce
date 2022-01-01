@@ -4,77 +4,77 @@ import PropType from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, withRouter } from 'react-router-dom';
-import { applyFilter, resetFilter } from '../../redux/actions/filterActions';
 import { selectMax, selectMin } from '../../selectors/selector';
 import PriceRange from './PriceRange';
+import { applyFilter, resetFilter } from '../../redux/slices/filterSlice';
 
 const Filters = ({ closeModal }) => {
-  // const { filter, isLoading, products } = useSelector((state) => ({
-  //   filter: state.filter,
-  //   isLoading: state.app.loading,
-  //   products: state.products.items
-  // }));
-  // const [field, setFilter] = useState({
-  //   brand: filter.brand,
-  //   minPrice: filter.minPrice,
-  //   maxPrice: filter.maxPrice,
-  //   sortBy: filter.sortBy
-  // });
+  const { filter, isLoading, products } = useSelector((state) => ({
+    filter: state.filter,
+    isLoading: state.app.loading,
+    products: state.products,
+  }));
+  const [field, setFilter] = useState({
+    brand: filter.brand,
+    minPrice: filter.minPrice,
+    maxPrice: filter.maxPrice,
+    sortBy: filter.sortBy
+  });
   const dispatch = useDispatch();
   const history = useHistory();
   const didMount = useDidMount();
 
-  // const max = selectMax(products);
-  // const min = selectMin(products);
+  const max = selectMax(products);
+  const min = selectMin(products);
 
-  // useEffect(() => {
-  //   if (didMount && window.screen.width <= 480) {
-  //     history.push('/');
-  //   }
+  useEffect(() => {
+    if (didMount && window.screen.width <= 480) {
+      history.push('/');
+    }
 
-  //   if (didMount && closeModal) closeModal();
+    if (didMount && closeModal) closeModal();
 
-  //   setFilter(filter);
-  //   window.scrollTo(0, 0);
-  // }, [filter]);
+    setFilter(filter);
+    window.scrollTo(0, 0);
+  }, [closeModal, didMount, filter, history]);
 
 
   const onPriceChange = (minVal, maxVal) => {
-    // setFilter({ ...field, minPrice: minVal, maxPrice: maxVal });
+    setFilter({ ...field, minPrice: minVal, maxPrice: maxVal });
   };
 
   const onBrandFilterChange = (e) => {
     const val = e.target.value;
 
-    // setFilter({ ...field, brand: val });
+    setFilter({ ...field, brand: val });
   };
 
   const onSortFilterChange = (e) => {
-    // setFilter({ ...field, sortBy: e.target.value });
+    setFilter({ ...field, sortBy: e.target.value });
   };
 
   const onApplyFilter = () => {
-    // const isChanged = Object.keys(field).some((key) => field[key] !== filter[key]);
+    const isChanged = Object.keys(field).some((key) => field[key] !== filter[key]);
 
-    // if (field.minPrice > field.maxPrice) {
-    //   return;
-    // }
+    if (field.minPrice > field.maxPrice) {
+      return;
+    }
 
-    // if (isChanged) {
-    //   dispatch(applyFilter(field));
-    // } else {
-    //   closeModal();
-    // }
+    if (isChanged) {
+      dispatch(applyFilter(field));
+    } else {
+      closeModal();
+    }
   };
 
   const onResetFilter = () => {
     const filterFields = ['brand', 'minPrice', 'maxPrice', 'sortBy'];
 
-    // if (filterFields.some((key) => !!filter[key])) {
-    //   dispatch(resetFilter());
-    // } else {
-    //   closeModal();
-    // }
+    if (filterFields.some((key) => !!filter[key])) {
+      dispatch(resetFilter());
+    } else {
+      closeModal();
+    }
   };
 
   return (
@@ -83,13 +83,13 @@ const Filters = ({ closeModal }) => {
         <span>Brand</span>
         <br />
         <br />
-        {/* {products.length === 0 && isLoading ? (
+        {products.length === 0 && isLoading ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <select
             className="filters-brand"
-            // value={field.brand}
-            // disabled={isLoading || products.length === 0}
+            value={field.brand}
+            disabled={isLoading || products.length === 0}
             onChange={onBrandFilterChange}
           >
             <option value="">All Brands</option>
@@ -98,7 +98,7 @@ const Filters = ({ closeModal }) => {
             <option value="black">Black Kibal</option>
             <option value="sexbomb">Sexbomb</option>
           </select>
-        )} */}
+        )}
       </div>
       <div className="filters-field">
         <span>Sort By</span>
@@ -106,8 +106,8 @@ const Filters = ({ closeModal }) => {
         <br />
         <select
           className="filters-sort-by d-block"
-          // value={field.sortBy}
-          // disabled={isLoading || products.length === 0}
+          value={field.sortBy}
+          disabled={isLoading || products.length === 0}
           onChange={onSortFilterChange}
         >
           <option value="">None</option>
@@ -121,26 +121,26 @@ const Filters = ({ closeModal }) => {
         <span>Price Range</span>
         <br />
         <br />
-        {/* {(products.length === 0 && isLoading) || max === 0 ? (
+        {(products.length === 0 && isLoading) || max === 0 ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : products.length === 1 ? (
           <h5 className="text-subtle">No Price Range</h5>
         ) : (
           <PriceRange
-            // min={min}
-            // max={max}
-            // initMin={field.minPrice}
-            // initMax={field.maxPrice}
-            // isLoading={isLoading}
+            min={min}
+            max={max}
+            initMin={field.minPrice}
+            initMax={field.maxPrice}
+            isLoading={isLoading}
             onPriceChange={onPriceChange}
-            // productsCount={products.length}
+            productsCount={products.length}
           />
-        )} */}
+        )}
       </div>
       <div className="filters-action">
         <button
           className="filters-button button button-small"
-          // disabled={isLoading || products.length === 0}
+          disabled={isLoading || products.length === 0}
           onClick={onApplyFilter}
           type="button"
         >
@@ -148,7 +148,7 @@ const Filters = ({ closeModal }) => {
         </button>
         <button
           className="filters-button button button-border button-small"
-          // disabled={isLoading || products.length === 0}
+          disabled={isLoading || products.length === 0}
           onClick={onResetFilter}
           type="button"
         >

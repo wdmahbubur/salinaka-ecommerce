@@ -41,19 +41,7 @@ const Navigation = () => {
   }, []);
 
 
-  // // disable the basket toggle to these pathnames
-  // const basketDisabledpathnames = [
-  //   ROUTE.CHECKOUT_STEP_1,
-  //   ROUTE.CHECKOUT_STEP_2,
-  //   ROUTE.CHECKOUT_STEP_3,
-  //   ROUTE.SIGNIN,
-  //   ROUTE.SIGNUP,
-  //   ROUTE.FORGOT_PASSWORD
-  // ];
 
-  // if (user?.email && user?.role === 'ADMIN') {
-  //   return null;
-  // } 
   if (window.screen.width <= 800) {
     return (
       <MobileNavigation

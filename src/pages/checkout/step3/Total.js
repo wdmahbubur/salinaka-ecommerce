@@ -6,7 +6,7 @@ import PropType from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { setPaymentDetails } from '../../../redux/actions/checkoutActions';
+import { setCheckOutPaymentDetails } from '../../../redux/slices/checkoutSlice';
 
 const Total = ({ isInternational, subtotal }) => {
   const { values, submitForm } = useFormikContext();
@@ -17,7 +17,7 @@ const Total = ({ isInternational, subtotal }) => {
     // destructure to only select left fields omitting cardnumber and ccv
     const { cardnumber, ccv, ...rest } = values;
 
-    dispatch(setPaymentDetails({ ...rest })); // save payment details
+    dispatch(setCheckOutPaymentDetails({ ...rest })); // save payment details
     history.push("/check-out-step-2");
   };
 

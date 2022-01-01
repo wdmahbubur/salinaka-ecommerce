@@ -6,12 +6,11 @@ import PropType from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { removeFromBasket } from '../../redux/actions/basketActions';
+import { removeFromBasket } from '../../redux/slices/basketSlice';
 
 const BasketItem = ({ product }) => {
-  // const dispatch = useDispatch();
-  // const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
-
+  const dispatch = useDispatch();
+  const onRemoveFromBasket = () => dispatch(removeFromBasket(product._id));
   return (
     <div className="basket-item">
       <BasketItemControl product={product} />
@@ -55,11 +54,12 @@ const BasketItem = ({ product }) => {
           </div>
         </div>
         <div className="basket-item-price">
-          <h4 className="my-0">{displayMoney(product.price * product.quantity)}</h4>
+
+          <h4 className="my-0">{displayMoney(product.price * product?.quantity)}</h4>
         </div>
         <button
           className="basket-item-remove button button-border button-border-gray button-small"
-          // onClick={onRemoveFromBasket}
+          onClick={onRemoveFromBasket}
           type="button"
         >
           <CloseOutlined />

@@ -10,30 +10,31 @@ const useProduct = (id) => {
   const didMount = useDidMount(true);
 
   useEffect(() => {
-    (async () => {
-      try {
-        if (!product || product.id !== id) {
-          setLoading(true);
-          const doc = await axios.get(`http://localhost:5000/api/products/${id}`)
+    console.log("test")
+      (async () => {
+        try {
+          if (!product || product.id !== id) {
+            setLoading(true);
+            const doc = await axios.get(`http://localhost:5000/api/products/${id}`)
 
-          if (doc.exists) {
-            const data = doc.data;
-            if (didMount) {
-              setProduct(data);
-              setLoading(false);
+            if (doc.exists) {
+              const data = doc.data;
+              if (didMount) {
+                setProduct(data);
+                setLoading(false);
+              }
+            } else {
+              setError('Product not found.');
             }
-          } else {
-            setError('Product not found.');
+          }
+        } catch (err) {
+          if (didMount) {
+            setLoading(false);
+            setError(err?.message || 'Something went wrong.');
           }
         }
-      } catch (err) {
-        if (didMount) {
-          setLoading(false);
-          setError(err?.message || 'Something went wrong.');
-        }
-      }
-    })();
-  }, [id]);
+      })();
+  }, [didMount, id, product]);
 
   return { product, isLoading, error };
 };

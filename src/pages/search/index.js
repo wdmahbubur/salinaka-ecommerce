@@ -7,8 +7,7 @@ import useDidMount from '../../hooks/useDidMount';
 import PropType from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {setRequestStatus} from '../../redux/actions/miscActions';
-import {searchProduct} from '../../redux/actions/productActions';
+import { requestStatus } from '../../redux/slices/appSlice';
 
 const Search = ({ match }) => {
   const { searchKey } = match.params;
@@ -23,12 +22,12 @@ const Search = ({ match }) => {
 
   useEffect(() => {
     if (didMount && !store.isLoading) {
-      dispatch(searchProduct(searchKey));
+      // dispatch(searchProduct(searchKey));
     }
   }, [searchKey]);
 
   useEffect(() => () => {
-    dispatch(setRequestStatus(''));
+    dispatch(requestStatus(''));
   }, []);
 
   if (store.requestStatus && !store.isLoading) {

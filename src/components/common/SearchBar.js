@@ -3,14 +3,14 @@ import { SearchOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { clearRecentSearch, removeSelectedRecent } from '../../redux/actions/filterActions';
+import { clearRecentSearch, removeSelectedRecent, setTextFilter } from '../../redux/slices/filterSlice';
 
 const SearchBar = () => {
   const [searchInput, setSearchInput] = useState('');
-  // const { filter, isLoading } = useSelector((state) => ({
-  //   filter: state.filter,
-  //   isLoading: state.app.loading
-  // }));
+  const { filter, isLoading } = useSelector((state) => ({
+    filter: state.filter,
+    isLoading: state.app.loading
+  }));
   const searchbarRef = useRef(null);
   const history = useHistory();
 
@@ -24,7 +24,7 @@ const SearchBar = () => {
 
   const onKeyUp = (e) => {
     if (e.keyCode === 13) {
-      // dispatch(setTextFilter(searchInput));
+      dispatch(setTextFilter(searchInput));
       e.target.blur();
       searchbarRef.current.classList.remove('is-open-recent-search');
 
@@ -48,14 +48,14 @@ const SearchBar = () => {
   const onFocusInput = (e) => {
     e.target.select();
 
-    // if (filter.recent.length !== 0) {
-    //   searchbarRef.current.classList.add('is-open-recent-search');
-    //   document.addEventListener('click', recentSearchClickHandler);
-    // }
+    if (filter.recent.length !== 0) {
+      searchbarRef.current.classList.add('is-open-recent-search');
+      document.addEventListener('click', recentSearchClickHandler);
+    }
   };
 
   const onClickRecentSearch = (keyword) => {
-    // dispatch(setTextFilter(keyword));
+    dispatch(setTextFilter(keyword));
     searchbarRef.current.classList.remove('is-open-recent-search');
     history.push(`/search/${keyword.trim().toLowerCase()}`);
   };
@@ -78,7 +78,7 @@ const SearchBar = () => {
           type="text"
           value={searchInput}
         />
-        {/* {filter.recent.length !== 0 && (
+        {filter.recent.length !== 0 && (
           <div className="searchbar-recent">
             <div className="searchbar-recent-header">
               <h5>Recent Search</h5>
@@ -112,7 +112,7 @@ const SearchBar = () => {
               </div>
             ))}
           </div>
-        )} */}
+        )}
       </div>
     </>
   );

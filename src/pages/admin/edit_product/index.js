@@ -1,12 +1,11 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import useScrollTop from '../../../hooks/useScrollTop';
-import  useProduct from '../../../hooks/useProduct';
+import useProduct from '../../../hooks/useProduct';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 import PropType from 'prop-types';
 import React, { lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
-import { editProduct } from '../../../redux/actions/productActions';
 
 const ProductForm = lazy(() => import('../components/ProductForm'));
 
@@ -17,7 +16,7 @@ const EditProduct = ({ match }) => {
   const dispatch = useDispatch();
 
   const onSubmitForm = (updates) => {
-    dispatch(editProduct(product.id, updates));
+    // dispatch(editProduct(product.id, updates));
   };
 
   return (

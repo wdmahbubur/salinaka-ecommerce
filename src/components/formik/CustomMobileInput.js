@@ -45,7 +45,7 @@ const CustomMobileInput = (props) => {
 };
 
 CustomMobileInput.defaultProps = {
-  label: 'Mobile Number',
+  label: '* Mobile Number',
   placeholder: '+880 123 456 7892'
 };
 

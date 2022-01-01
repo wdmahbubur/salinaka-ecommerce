@@ -2,18 +2,14 @@
 import {
   DownOutlined, LoadingOutlined, LogoutOutlined, UserOutlined
 } from '@ant-design/icons';
-// import { ACCOUNT } from 'constants/routes';
-import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { signOut } from '../../../redux/actions/authActions';
 import useAuth from '../../../hooks/useAuth';
 import defaultAvatar from '../../../images/defaultAvatar.jpg';
 
 const UserNav = () => {
   const { user, logout, loading } = useAuth();
-
+  console.log(user)
   const userNav = useRef(null);
 
   const toggleDropdown = (e) => {

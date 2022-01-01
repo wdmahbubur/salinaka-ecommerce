@@ -10,12 +10,12 @@ import PropType from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { setShippingDetails } from '../../../redux/actions/checkoutActions';
 import * as Yup from 'yup';
 import StepTracker from '../components/StepTracker';
 import withCheckout from '../hoc/withCheckout';
 import ShippingForm from './ShippingForm';
 import ShippingTotal from './ShippingTotal';
+import { setCheckOutShippingDetails } from '../../../redux/slices/checkoutSlice';
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -55,7 +55,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
   };
 
   const onSubmitForm = (form) => {
-    dispatch(setShippingDetails({
+    dispatch(setCheckOutShippingDetails({
       fullname: form.fullname,
       email: form.email,
       address: form.address,
@@ -63,7 +63,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       isInternational: form.isInternational,
       isDone: true
     }));
-    history.push("#");
+    history.push("/check-out-step-3");
   };
 
   return (
@@ -89,7 +89,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                 <div className="checkout-shipping-action">
                   <button
                     className="button button-muted"
-                    onClick={() => history.push("#")}
+                    onClick={() => history.push("/check-out-step-1")}
                     type="button"
                   >
                     <ArrowLeftOutlined />
@@ -99,6 +99,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                   <button
                     className="button button-icon"
                     type="submit"
+                    onClick={onSubmitForm}
                   >
                     Next Step
                     &nbsp;
